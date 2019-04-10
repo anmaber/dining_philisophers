@@ -1,24 +1,25 @@
 #pragma once
 #include <thread>
 #include <mutex>
-#include <chrono>
 
-class Fork{
-    std::mutex mutex;
+struct Fork{
+   mutable std::mutex mutex;
 };
 
 class Philosopher{
 
     int philosopherID;
-    std::thread lifeThread;
     Fork& leftFork;
-    Fork& righFork;
+    Fork& rightFork;
+    std::thread lifeThread;
+
 
 public:
 
-    Philosopher();
+    Philosopher(int ID,Fork& left,Fork& right);
     void eat();
     void think();
     void dine();
+    ~Philosopher();
 };
 
